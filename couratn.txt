@@ -1,5 +1,11 @@
 DEMINEUR	
 	
+	XXX
+	XXX
+	XXx
+
+
+
 class Plateau():
 
 
@@ -8,10 +14,9 @@ class Plateau():
 
 
 
-creation_plateau(long, larg)
 
-pose_drapeau_case(coo_case, plateau):
-	"permet de poser un drapeau sur une  case "
+
+
 
 detecèclick():#graphique
 	" retourne vrai si un click est detecté eet les pos de la case concerne si elle est jouable"
@@ -19,15 +24,11 @@ detecèclick():#graphique
 choix_case():#terminal
 	"retourne une case selectionn"
 		
-revelation_case(coo_case , plateau):
-	"revele la case et retourne False si la case est saine et inverse "
-	
-verification_bombe(plateau):
-	"renvoi True si il n'ya plsu de bombe sans drapeau dans la partie"
 
 
-bombe_autour():
-	"donne de bombe autour de la case 
+
+
+
 
 def destruction(plateau, coo_case):
 	"revele tout les cases sans bombe autour + leur case avec bombe autour adjacentes"
@@ -45,3 +46,6 @@ class Case(x,y):
 
 
 
+  XXX
+  XXX
+  XXX
