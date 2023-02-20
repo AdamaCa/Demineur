@@ -1,13 +1,18 @@
 import random
+from fltk import *
 
 class Case():
-    def __init__(self,X,Y):
-      self.X = X
-      self.Y = Y
-      self.bombe = True #bool(random.random() < 0.4)
-      self.flag = False
-      self.elem = "X"
-      self.bombe_autour = 0
+    def __init__(self,X,Y,pos_tab):
+        self.X = X
+        self.Y = Y
+        self.pos_tabx = pos_tab[0]
+        self.pos_taby = pos_tab[1]
+        self.case = image()
+        self.bombe = bool(random.random() < 0.4)
+        self.flag = False
+        self.elem = "X"
+        self.bombe_autour = 0
+        self.chiffre = 0
     
     
 #Setters
@@ -17,15 +22,13 @@ class Case():
         
     
 #Setters de test
-
-    def set_bombe(self):
-        self.bombe =False
  
     
     
 #Getters
     
     def is_bombe(self):
+        print(self.bombe)
         return self.bombe
 
 
@@ -33,13 +36,13 @@ class Case():
         return self.elem
         
     def get_cco(self):
-        return self.X,self.Y
+        return self.pos_tabx,self.pos_taby
       
     def get_X(self):
-        return self.X
+        return self.pos_tabx
 
     def get_Y(self):
-        return self.Y
+        return self.pos_taby
     
     def get_bombe_autour(self):
         return self.bombe_autour
@@ -61,10 +64,13 @@ class Case():
 
             
     def revelation(self):
-        if not self.flag:
-            if self.bombe:
-                self.elem = "bombe"
-            else:
-                self.elem = self.bombe_autour           
+        if self.elem == "X":
+                if self.bombe:
+                    self.elem = "bombe"
+                else:
+                    self.elem = self.bombe_autour
+                    efface(self.case)
+                    self.case = rectangle(self.X[0],self.X[1],self.Y[0],self.Y[1])          
+                    self.chiffre = texte(self.X[0], self.X[1] ,chaine = str(self.bombe_autour))
 
         
