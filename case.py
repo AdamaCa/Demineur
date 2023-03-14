@@ -1,5 +1,6 @@
 import random
 from fltk import *
+from PIL import Image
 
 class Case():
     def __init__(self,X,Y,pos_tab):
@@ -7,33 +8,44 @@ class Case():
         self.Y = Y
         self.pos_tabx = pos_tab[0]
         self.pos_taby = pos_tab[1]
-        self.case = image()
-        self.bombe = bool(random.random() < 0.4)
+        self.case =  image(self.X[0], self.X[1], "images/case_jeu.png", hauteur = int(self.Y[1]-self.X[1]), largeur=int(self.Y[0]-self.X[0]), ancrage="nw")
+        self.bombe = bool(random.random() < 0.2)
+        self.perdu = False
         self.flag = False
-        self.elem = "X"
+        self.img_flag = "images/flag_jeu.png"
+        self.image = ''
         self.bombe_autour = 0
-        self.chiffre = 0
-    
-    
-#Setters
+        self.affiche_bombe()
 
+    
+#Test
+
+    def affiche_bombe(self):
+        if self.is_bombe():
+            efface(self.case)
+            self.case = image(self.X[0], self.X[1], "images/bombe_jeu.png", hauteur = int(self.Y[1]-self.X[1]), largeur=int(self.Y[0]-self.X[0]), ancrage="nw")
+
+        
+#Setters
+ 
     def set_BombeAutour(self, Ba):
         self.bombe_autour = Ba
+        self.image = "images/{}_jeu.png".format(Ba)
         
     
 #Setters de test
- 
+
     
     
 #Getters
+
+    def get_perdu(self):
+        return self.perdu
+    
     
     def is_bombe(self):
-        print(self.bombe)
         return self.bombe
 
-
-    def get_elem(self):
-        return self.elem
         
     def get_cco(self):
         return self.pos_tabx,self.pos_taby
@@ -55,22 +67,24 @@ class Case():
 #Fonctions
     
     def ChgDrapeau(self):
-            self.flag = not self.flag
-            if self.flag:
-                self.elem = "flag"
-            else:
-                self.elem = "X"
-                
+        self.flag = not self.flag
+        if self.flag:
+            self.img_flag = image(self.X[0], self.X[1], "images/flag_jeu.png", hauteur = int(self.Y[1]-self.X[1]), largeur=int(self.Y[0]-self.X[0]), ancrage="nw")
+        else:
+            efface(self.case)
+            self.case = rectangle(self.X[0], self.X[1], self.Y[0],self.Y[1], couleur="white", remplissage="green")
+       
 
             
     def revelation(self):
-        if self.elem == "X":
-                if self.bombe:
-                    self.elem = "bombe"
+        if not self.flag:
+                efface(self.case)
+                if self.bombe: 
+                    print("fzeiojnfozfiznfoznf", self.perdu)
+                    self.case = image(self.X[0], self.X[1], "images/bombe_jeu.png", hauteur = int(self.Y[1]-self.X[1]), largeur=int(self.Y[0]-self.X[0]), ancrage="nw")
+                    self.perdu = True
                 else:
-                    self.elem = self.bombe_autour
-                    efface(self.case)
-                    self.case = rectangle(self.X[0],self.X[1],self.Y[0],self.Y[1])          
-                    self.chiffre = texte(self.X[0], self.X[1] ,chaine = str(self.bombe_autour))
+                    self.case = image(self.X[0], self.X[1], self.image, hauteur = int(self.Y[1]-self.X[1]), largeur=int(self.Y[0]-self.X[0]), ancrage="nw")
+
 
         

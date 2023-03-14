@@ -2,94 +2,6 @@ from plateau import Plateau
 from fltk import *
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #Terminal
 """def choix_case():
 1    x = int(input("Veuillez ecrire la ligne de la case : "))
@@ -122,28 +34,33 @@ print("lol")"""""
 #Graphique      
 
 taille_fenetre = (1280,720)
-cree_fenetre(1280,720)
-plateau = Plateau([30,30], taille_fenetre)
-bombe = False
+cree_fenetre(taille_fenetre[0], taille_fenetre[1])
+plateau = Plateau((20,20), taille_fenetre)
+bombe = True
 mise_a_jour()
-while not bombe: 
+while bombe == True: 
     ev = donne_ev()
     tev = type_ev(ev)
     
     
     if tev == "Quitte":
-        bombe = True
         break
-    
+    if tev == "ClicDroit":
+        y = int(abscisse_souris()/plateau.get_t_case()[0])
+        x = int(ordonnee_souris()/plateau.get_t_case()[1])
+        plateau.chg_drapeau_case((x,y))
+        
     if tev == "ClicGauche":
         y = int(abscisse_souris()/plateau.get_t_case()[0])
         x= int(ordonnee_souris()/plateau.get_t_case()[1])
-        print(y,x)
-        plateau.revelation_case((y,x))
-        print("wsh")
+        plateau.shine(x, y, True, [])
         
+    
+    
+    bombe = plateau.verification_bombe()    
     mise_a_jour()
     
+print(bombe)
 ferme_fenetre()
 
 
